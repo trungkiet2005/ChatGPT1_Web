@@ -1,6 +1,18 @@
 .message {
   display: flex;
   margin-bottom: 0;
+  animation: messageSlideIn 0.4s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .message-user {
@@ -14,30 +26,62 @@
 .message-bubble {
   max-width: 80%;
   padding: 18px 22px;
-  border-radius: 12px;
+  border-radius: 20px;
   font-size: 1.13rem;
   line-height: 1.7;
   white-space: pre-line;
   word-break: break-word;
-  box-shadow: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.message-bubble::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.message-bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
 .message-user .message-bubble {
-  background: #fff;
-  color: #222;
-  border-radius: 12px;
-  border-bottom-right-radius: 6px;
-  border-bottom-left-radius: 16px;
+  background: var(--message-user-bg);
+  color: #000;
+  border-radius: 20px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20px;
   align-self: flex-end;
-  border: 1px solid #ececec;
+  border: none;
+  box-shadow: 0 4px 20px rgba(236, 236, 236, 0.3);
+}
+
+.message-user .message-bubble:hover {
+  box-shadow: 0 8px 30px rgba(236, 236, 236, 0.4);
 }
 
 .message-bot .message-bubble {
-  background: #f7f7f8;
-  color: #222;
-  border-radius: 12px;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 16px;
+  background: var(--message-bot-bg);
+  backdrop-filter: blur(10px);
+  color: var(--text-primary);
+  border-radius: 20px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 20px;
   align-self: flex-start;
-  border: 1px solid #ececec;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.message-bot .message-bubble:hover {
+  border: 1px solid rgba(236, 236, 236, 0.2);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 } 

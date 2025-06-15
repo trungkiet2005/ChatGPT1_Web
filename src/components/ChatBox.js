@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Message from './Message';
 import './ChatBox.css';
 
 const BASE_URL = "https://huynhtrungkiet09032005-gpt1.hf.space";
 
-function ChatBox() {
+function ChatBox({ messages, setMessages }) {
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Xin chào! Hãy nhập vài từ để mình làm thơ cho bạn.' }
-  ]);
   const [loading, setLoading] = useState(false);
+  const messagesListRef = useRef();
+
+  // Auto scroll to bottom when messages change
+  useEffect(() => {
+    if (messagesListRef.current) {
+      messagesListRef.current.scrollTop = messagesListRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -102,7 +107,7 @@ function ChatBox() {
 
   return (
     <div className="chatbox-container">
-      <div className="messages-list">
+      <div className="messages-list" ref={messagesListRef}>
         {messages.map((msg, idx) => (
           <Message key={idx} role={msg.role} text={msg.text} />
         ))}
@@ -118,7 +123,10 @@ function ChatBox() {
           disabled={loading}
         />
         <button onClick={handleSend} disabled={loading || !input.trim()} aria-label="Gửi">
-          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2.94 2.94a1.5 1.5 0 0 1 1.6-.33l12.5 5.06c1.2.49 1.2 2.15 0 2.64l-12.5 5.06a1.5 1.5 0 0 1-2.04-1.7l1.13-5.06a.5.5 0 0 1 0-.24L.9 4.64A1.5 1.5 0 0 1 2.94 2.94zm1.13 1.13a.5.5 0 0 0-.67.57l1.13 5.06a1.5 1.5 0 0 1 0 .24l-1.13 5.06a.5.5 0 0 0 .67.57l12.5-5.06a.5.5 0 0 0 0-.94l-12.5-5.06z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M22 2L11 13"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+          </svg>
         </button>
       </div>
     </div>

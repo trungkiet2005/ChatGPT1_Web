@@ -1,87 +1,174 @@
 .chatbox-container {
-  flex: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 32px;
-  height: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
 }
 
 .messages-list {
   flex: 1;
   overflow-y: auto;
-  margin-bottom: 0;
+  padding: 24px 40px 100px 40px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding: 32px 0 20px 0;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(236, 236, 236, 0.6) transparent;
+  scroll-behavior: smooth;
+}
+
+.messages-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+  background: rgba(236, 236, 236, 0.6);
+  border-radius: 10px;
+}
+
+.messages-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(236, 236, 236, 0.8);
 }
 
 .input-row {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  padding: 16px 40px 24px 40px;
   display: flex;
   gap: 0;
-  padding: 0;
-  border-top: none;
-  background: transparent;
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
-  margin-top: 0;
-  margin-bottom: 12px;
+  z-index: 5;
 }
 
 .input-row input {
   flex: 1;
-  padding: 20px 24px;
-  border-radius: 28px;
-  border: 1.5px solid #d9d9e3;
+  padding: 20px 60px 20px 24px;
+  border-radius: 30px;
+  border: 2px solid rgba(236, 236, 236, 0.8);
   font-size: 1.15rem;
   outline: none;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: border 0.22s, box-shadow 0.22s;
-  color: #222;
+  background: var(--input-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .input-row input:focus {
-  border: 2px solid #10a37f;
-  box-shadow: 0 4px 16px rgba(16,163,127,0.10);
+  box-shadow: 0 6px 30px rgba(236, 236, 236, 0.4);
+  background: var(--bg-secondary);
+  transform: translateY(-2px);
+  border: 2px solid rgb(236, 236, 236);
 }
 
 .input-row input:hover {
-  border: 2px solid #10a37f;
+  transform: translateY(-1px);
 }
 
 .input-row input::placeholder {
-  color: #b3b3b3;
+  color: var(--text-secondary);
   font-size: 1.13rem;
   font-weight: 500;
   opacity: 0.85;
 }
 
 .input-row button {
-  background: none;
+  background: var(--accent-color);
   border: none;
   outline: none;
-  margin-left: -44px;
-  margin-right: 8px;
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  height: 40px;
-  width: 40px;
+  height: 44px;
+  width: 44px;
   border-radius: 50%;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(236, 236, 236, 0.6);
+  overflow: hidden;
+}
+
+.input-row button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.input-row button:hover::before {
+  left: 100%;
+}
+
+.input-row button:hover {
+  transform: translateY(-50%) translateY(-3px) scale(1.05);
+  background: rgb(0,0,0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.input-row button:active {
+  transform: translateY(-50%) translateY(-1px) scale(1.02);
 }
 
 .input-row button:disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 8px rgba(236, 236, 236, 0.4);
+}
+
+.input-row button:disabled:hover {
+  transform: translateY(-50%);
+  box-shadow: 0 2px 8px rgba(236, 236, 236, 0.4);
+  background: var(--accent-color);
 }
 
 .input-row button svg {
-  width: 22px;
-  height: 22px;
-  color: #10a37f;
+  width: 24px;
+  height: 24px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.input-row button:hover svg {
+  transform: rotate(15deg);
+  color: #fff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .chatbox-container {
+    max-width: 100%;
+  }
+  
+  .messages-list {
+    padding: 24px 16px 100px 16px;
+  }
+  
+  .input-row {
+    padding: 16px;
+  }
+  
+  .input-row button {
+    right: 24px;
+  }
 } 
