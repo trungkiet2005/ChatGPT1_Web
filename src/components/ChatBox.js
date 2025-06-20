@@ -38,7 +38,7 @@ function ChatBox({ messages, setMessages }) {
         },
         body: JSON.stringify({
           prompt: input,
-          max_length: 130,
+          max_length: 200,
           temperature: 1.0
         })
       });
